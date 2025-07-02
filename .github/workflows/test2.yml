@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo secret
-        run: echo "secret ${{ secrets.token }}
+        run: echo "secret ${{ secrets.token }}"
