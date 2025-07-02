@@ -1,0 +1,12 @@
+name: test workflow
+
+run-name: Run by @${{ github.actor }}
+
+on: [push,pull_request]
+
+
+jobs:
+  pass-secret-to-workflow:
+    use: ./.github/test2.yml
+    secrets:
+      token: ${{ secrets.TEST1_TOKEN }}

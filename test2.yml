@@ -1,0 +1,16 @@
+name: test2 workflow
+
+run-name: Run by @${{ github.actor }}
+
+on: 
+  workflow_call:
+    secrets:
+      token:
+        required: true
+
+jobs:
+  use-secret-in-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo secret
+        run: echo "secret ${{ secrets.token }}
