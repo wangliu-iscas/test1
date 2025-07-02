@@ -7,6 +7,6 @@ on: [push,pull_request,workflow_dispatch]
 
 jobs:
   pass-secret-to-workflow:
-    use: ./.github/test2.yml
+    uses: ./.github/test2.yml
     secrets:
       token: ${{ secrets.TEST1_TOKEN }}
