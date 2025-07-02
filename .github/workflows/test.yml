@@ -10,3 +10,9 @@ jobs:
     uses: ./.github/workflows/test2.yml
     secrets:
       token: ${{ secrets.TEST1_TOKEN }}
+    
+
+  pass-secret-ti-other-repo:
+    uses: github.com/wangliu-iscas/test2/.github/workflows/test.yml@main
+    secrets:
+      token: ${{ secrets.TEST1_TOKEN }} 
