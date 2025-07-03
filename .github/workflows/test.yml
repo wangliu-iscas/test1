@@ -29,19 +29,19 @@ jobs:
       max-parallel: 1
       matrix:
         wait: [1,2,3,4,5,6,7]
+      fail-fast: ${{ env.test_return_code == 'done' }}
     steps:
       - name: check
-        if: ${{ env.test_return_code }} != "done"
         run: |
           echo "running ${{ matrix.wait }}"
-          echo "test_return_code=running" >> $GITHUB_ENV
           if  [ ${{ matrix.wait }} == 5 ];then
             echo "test_return_code=done" >> $GITHUB_ENV
-            exit 0
+          else
+            echo "test_return_code=running" >> $GITHUB_ENV
           fi
       
       - name: on-cancel
-        if: ${{ env.test_return_code }} == "done"
+        if: ${{ env.test_return_code  == "done" }}
         run: |
           echo "${{ matrix.wait }} on-cancel"
           
