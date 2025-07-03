@@ -7,6 +7,7 @@ env:
   test_return_code: "asd"
 
 jobs:
+
   pass-secret-to-workflow:
     uses: ./.github/workflows/test2.yml
     secrets:
@@ -26,11 +27,12 @@ jobs:
       
   test_matrix:
     runs-on: ubuntu-latest
+    continue-on-error: false
     strategy:
       max-parallel: 1
       matrix:
         wait: [1,2,3,4,5,6,7]
-      fail-fast: ${{ github.env.test_return_code == 'done'}}
+      #fail-fast: ${{ github.env.test_return_code == 'done'}}
     steps:
       - name: check
         run: |
