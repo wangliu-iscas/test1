@@ -36,9 +36,9 @@ jobs:
         if: ${{ env.test_return_code }} != "done"
         run: |
           echo "running ${{ matrix.wait }}"
-          ${{ env.test_return_code }}="running"
+          echo "test_return_code=running" >> $GITHUB_ENV
           if  [ ${{ matrix.wait }} == 5 ]
-            ${{ env.test_return_code }}="done"
+            echo "test_return_code=done" >> $GITHUB_ENV
             exit 0
           fi
       
