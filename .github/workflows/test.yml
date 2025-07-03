@@ -4,7 +4,7 @@ run-name: Run by @${{ github.actor }}
 
 on: [push,pull_request,workflow_dispatch]
 env:
-    test_return_code: "asd"
+  test_return_code: "asd"
 
 jobs:
   pass-secret-to-workflow:
@@ -43,7 +43,6 @@ jobs:
           fi
       
       - name: on-cancel
-        if: ${{ env.test_return_code  == "done" }}
         run: |
           echo "${{ matrix.wait }} on-cancel"
           
