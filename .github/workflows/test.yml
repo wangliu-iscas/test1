@@ -3,7 +3,8 @@ name: test workflow
 run-name: Run by @${{ github.actor }}
 
 on: [push,pull_request,workflow_dispatch]
-
+env:
+    test_return_code: "asd"
 
 jobs:
   pass-secret-to-workflow:
@@ -25,13 +26,11 @@ jobs:
       
   test_matrix:
     runs-on: ubuntu-latest
-    env:
-        test_return_code: ""
     strategy:
       max-parallel: 1
       matrix:
         wait: [1,2,3,4,5,6,7]
-      fail-fast: ${{ test_matrix.env.test_return_code == 'done' }}
+      fail-fast: ${{ env.test_return_code == done }} 
     steps:
       - name: check
         run: |
@@ -43,7 +42,7 @@ jobs:
           fi
       
       - name: on-cancel
-        if: ${{ test_matrix.env.test_return_code  == "done" }}
+        if: ${{ env.test_return_code  == "done" }}
         run: |
           echo "${{ matrix.wait }} on-cancel"
           
