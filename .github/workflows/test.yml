@@ -30,10 +30,11 @@ jobs:
       max-parallel: 1
       matrix:
         wait: [1,2,3,4,5,6,7]
-      fail-fast: ${{ env.test_return_code == done }} 
+      #fail-fast: ${{ env.test_return_code == done }} 
     steps:
       - name: check
         run: |
+          echo "test return code: ${{ env.test_return_code }}"
           echo "running ${{ matrix.wait }}"
           if  [ ${{ matrix.wait }} == 5 ];then
             echo "test_return_code=done" >> $GITHUB_ENV
