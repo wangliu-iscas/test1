@@ -25,6 +25,8 @@ jobs:
       
   test_matrix:
     runs-on: ubuntu-latest
+    env:
+        test_return_code: ""
     strategy:
       max-parallel: 1
       matrix:
