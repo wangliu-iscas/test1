@@ -46,6 +46,7 @@ jobs:
         run: |
           echo "test return code: ${{ env.test_return_code }}"
           echo "${{ matrix.wait }} on-cancel"
+          exit 1
           
           
           
