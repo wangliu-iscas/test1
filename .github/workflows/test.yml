@@ -20,4 +20,32 @@ jobs:
   pass-secret-to-other-owner-repo:
     uses: OERV-RVCI/isorepocheck/.github/workflows/test.yml@main
     secrets:
-      token: ${{ secrets.TEST1_TOKEN }} 
+      token: ${{ secrets.TEST1_TOKEN }}
+      
+      
+  test_matrix:
+    runs-on: ubuntu-latest
+    env: 
+      test_return_code: "" 
+    strategy:
+      max-parallel: 1
+      matrix:
+        wait: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    steps:
+      - name: check
+        if: ${{ env.test_return_code }} != "done"
+        run: |
+          echo "running ${{ matrix.wait }}"
+          ${{ env.test_return_code }}="running"
+          if  [ ${{ matrix.wait }} == 5 ]
+            ${{ env.test_return_code }}="done"
+            exit 0
+          fi
+      
+      - name: on-cancel
+        if: ${{ env.test_return_code }} == "done"
+        run: |
+          echo "${{ matrix.wait }} on-cancel"
+          
+          
+          
