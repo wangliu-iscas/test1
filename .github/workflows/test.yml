@@ -31,7 +31,7 @@ jobs:
       max-parallel: 1
       matrix:
         wait: [1,2,3,4,5,6,7]
-      fail-fast: ${{ env.test_return_code == 'done' }}
+      fail-fast: ${{ test_matrix.env.test_return_code == 'done' }}
     steps:
       - name: check
         run: |
@@ -43,7 +43,7 @@ jobs:
           fi
       
       - name: on-cancel
-        if: ${{ env.test_return_code  == "done" }}
+        if: ${{ test_matrix.env.test_return_code  == "done" }}
         run: |
           echo "${{ matrix.wait }} on-cancel"
           
