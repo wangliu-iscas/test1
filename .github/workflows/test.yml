@@ -49,7 +49,7 @@ jobs:
           echo "test return code: ${{ env.test_return_code }}"
           echo "${{ matrix.wait }} on-cancel"
           if [ ${{ env.test_return_code }} == "done" ];then
-            exit 1
+            exit 127
           fi
           
           
