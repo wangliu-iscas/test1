@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "running ${{ matrix.wait }}"
           echo "test_return_code=running" >> $GITHUB_ENV
-          if  [ ${{ matrix.wait }} == 5 ]
+          if  [ ${{ matrix.wait }} == 5 ];then
             echo "test_return_code=done" >> $GITHUB_ENV
             exit 0
           fi
