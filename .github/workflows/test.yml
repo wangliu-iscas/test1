@@ -4,7 +4,7 @@ run-name: Run by @${{ github.actor }}
 
 on: [push,pull_request,workflow_dispatch]
 env:
-  test_return_code: "asd"
+  check_re: ""
 
 jobs:
 
@@ -27,6 +27,8 @@ jobs:
       
   test_matrix:
     runs-on: ubuntu-latest
+    outputs:
+      check_result:  ${{ steps.check.outputs.check_re }}
     continue-on-error: false
     strategy:
       max-parallel: 1
@@ -35,21 +37,26 @@ jobs:
       #fail-fast: ${{ github.env.test_return_code == 'done'}}
     steps:
       - name: check
+        id: check
+        if: ${{ env.check_re != 'done' }}
         run: |
-          echo "test return code: ${{ env.test_return_code }}"
           echo "running ${{ matrix.wait }}"
-          if  [ ${{ matrix.wait }} == 5 ];then
-            echo "test_return_code=done" >> $GITHUB_ENV
+          if [ ${{ matrix.wait }} -le 5 ];then
+            echo "check_re=running" >> "$GITHUB_OUTPUT"
+          elif [ ${{ matrix.wait }} -eq 5 ];then
+            echo "check_re=done" >> "$GITHUB_OUTPUT"
           else
-            echo "test_return_code=running" >> $GITHUB_ENV
+            exit 1
           fi
-      
-      - name: on-cancel
+
+  test_collect_result:
+    runs-on: ubuntu-latest
+    needs: [test_matrix]
+    if: ${{ needs.test_matrix.outputs.check_result  == 'done' }}
+    steps:  
+      - name: collect_result
         run: |
-          echo "test return code: ${{ env.test_return_code }}"
-          echo "${{ matrix.wait }} on-cancel"
-          if [ ${{ env.test_return_code }} == "done" ];then
-            exit 127
-          fi
+          echo "check return : ${{ needs.test_matrix.outputs.check_result }}"
+          echo "${{ github. test_matrix.strategy.matrix.wait }} on-cancel"
           
           
